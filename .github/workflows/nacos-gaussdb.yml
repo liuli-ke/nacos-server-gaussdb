@@ -1,4 +1,4 @@
-name: Kibana-oss ARM Image
+name: Nacos For GaussDB Image
 
 on:
   workflow_dispatch:
