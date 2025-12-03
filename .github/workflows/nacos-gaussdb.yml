@@ -23,8 +23,35 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout current repository
+      - name: Checkout current repository with Git LFS
         uses: actions/checkout@v4
+        with:
+          lfs: true  # 启用 Git LFS
+          lfs-fetch-depth: 1  # 只拉取需要的 LFS 文件
+
+      - name: Install Git LFS (确保系统已安装)
+        run: |
+          # 确保 Git LFS 已安装
+          if ! command -v git-lfs &> /dev/null; then
+            echo "Installing Git LFS..."
+            sudo apt-get update
+            sudo apt-get install -y git-lfs
+            git lfs install --skip-repo
+          fi
+
+      - name: Pull Git LFS files
+        run: |
+          # 拉取所有 LFS 文件
+          git lfs pull
+          # 验证 JAR 文件是否正确拉取
+          echo "🔍 Verifying jar files..."
+          find . -name "*.jar" -type f -exec file {} \; | head -20
+          # 检查具体的 nacos-server.jar
+          if [ -f "./target/nacos-server.jar" ]; then
+            echo "Checking nacos-server.jar..."
+            head -1 ./target/nacos-server.jar
+            ls -lh ./target/nacos-server.jar
+          fi
 
       - name: Setup Docker environment
         run: |
