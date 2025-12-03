@@ -80,8 +80,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0.1-gaussdb-slim
-            ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0-gaussdb-slim
+            ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0.1-gaussdb-auth-slim
+            ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0-gaussdb-auth-slim
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
@@ -105,8 +105,8 @@ jobs:
       - name: Verify multi-arch manifest
         run: |
           echo "🔍 Verifying multi-architecture manifest..."
-          docker buildx imagetools inspect ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0.1-gaussdb-slim
-          docker buildx imagetools inspect ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0-gaussdb-slim
+          docker buildx imagetools inspect ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0.1-gaussdb-auth-slim
+          docker buildx imagetools inspect ${{ env.DOCKER_PROJECT }}/${{ env.IMAGE_NAME }}:v2.2.0-gaussdb-auth-slim
 
       - name: Logout from Docker Hub
         run: |
